@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,6 +29,14 @@ namespace AzureADApi
         {
 
             services.AddControllers();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+                {
+                    options.Authority = "https://login.microsoftonline.com/be8e3da8-8e22-48b0-a436-3de228d5d987/v2.0";
+                    options.Audience = "api://3e9d194c-57f3-4a80-8138-312a7c051045";
+                    //options.TokenValidationParameters.ValidIssuer = "https://login.microsoftonline.com/be8e3da8-8e22-48b0-a436-3de228d5d987/v2.0";
+                    options.TokenValidationParameters.ValidateIssuer = false;
+                });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AzureADApi", Version = "v1" });
@@ -47,6 +56,7 @@ namespace AzureADApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

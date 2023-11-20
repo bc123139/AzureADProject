@@ -28,6 +28,7 @@ namespace AzureADWeb
         {
             //ApplicationBuilder/clientid 34bd6f4c - ae03 - 47f6 - a0fa - 3db6ee8072a7
             //endpoint https://login.microsoftonline.com/be8e3da8-8e22-48b0-a436-3de228d5d987/oauth2/v2.0/authorize
+            services.AddHttpClient();
             services.AddControllersWithViews();
             services.AddAuthentication(options =>
             {
@@ -40,12 +41,12 @@ namespace AzureADWeb
                 options.ClientId = "34bd6f4c-ae03-47f6-a0fa-3db6ee8072a7";
                 options.ResponseType = "code";
                 options.SaveTokens = true;
-                //options.Scope.Add("api://de626dc0-5cbe-4f4b-9f8e-3148b9288f7b/AdminAccess");
+                options.Scope.Add("api://3e9d194c-57f3-4a80-8138-312a7c051045/AdminAccess");
                 options.ClientSecret = "LrZ8Q~DL.LzZvEc-A0r21KfQQbMzdqepZbVRecfn";
-                //options.TokenValidationParameters = new TokenValidationParameters()
-                //{
-                //    NameClaimType = "name"
-                //};
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    NameClaimType = "name"
+                };
             });
         }
 
